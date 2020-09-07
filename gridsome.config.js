@@ -5,6 +5,7 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Gridsome',
-  plugins: []
-}
+  siteName: 'Eventer',
+  siteDescription: 'Post or find your events',
+  plugins: [],
+};

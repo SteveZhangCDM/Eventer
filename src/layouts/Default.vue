@@ -1,15 +1,22 @@
 <template>
   <v-app>
-    <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about/">About</g-link>
-      </nav>
-    </header>
-    <p>{{ $static.metadata.siteDescription }}</p>
+    <v-app-bar app>
+      <v-toolbar-title>Eventer</v-toolbar-title>
+      <v-col cols="12" sm="6" md="3">
+        <v-text-field
+          placeholder="Search"
+          class="ml-8"
+          outlined
+          rounded
+          dense
+          hide-details
+          style="max-width: 350px"
+          prepend-inner-icon="mdi-magnify"
+        />
+      </v-col>
+      <v-spacer></v-spacer>
+      <v-btn>Create New Event</v-btn>
+    </v-app-bar>
     <v-main>
       <slot />
     </v-main>

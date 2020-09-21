@@ -22,10 +22,9 @@
         <v-img
           class="white--text align-end"
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        >
-          <v-card-title>{{ edge.node.title }}</v-card-title>
-        </v-img>
+          :src="`http://localhost:1337${edge.node.thumbnail}`"
+        />
+        <v-card-title>{{ edge.node.title }}</v-card-title>
 
         <v-card-subtitle class="pb-0">{{ edge.node.date }}</v-card-subtitle>
 
@@ -54,6 +53,7 @@
           price
           date
           duration
+          thumbnail
         }
       }
     }

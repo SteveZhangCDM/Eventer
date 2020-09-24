@@ -34,6 +34,7 @@ module.exports = function(api) {
         date: event.date,
         duration: event.duration,
         thumbnail: event.image.formats.thumbnail.url,
+        category: event.categories[0].id,
         // image: event.image.formats.medium.url,
       });
     }

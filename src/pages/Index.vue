@@ -4,9 +4,9 @@
       <v-row>
         <v-col sm="6" offset-sm="3">
           <v-tabs v-model="tab" grow>
-            <v-tab>Item One</v-tab>
-            <v-tab>Item Two</v-tab>
-            <v-tab>Item Three</v-tab>
+            <v-tab>All Event</v-tab>
+            <v-tab>Designning</v-tab>
+            <v-tab>Developing</v-tab>
           </v-tabs>
         </v-col>
       </v-row>
@@ -14,7 +14,7 @@
 
     <v-row class="justify-space-around">
       <v-card
-        v-for="edge in $page.events.edges"
+        v-for="edge in events"
         :key="edge.node.id"
         class="mt-5"
         width="400"
@@ -54,6 +54,7 @@
           date
           duration
           thumbnail
+          category
         }
       }
     }
@@ -66,23 +67,29 @@ export default {
   data() {
     return {
       tab: 0,
+      events: [],
     };
+  },
+  mounted() {
+    this.events = this.$page.events.edges;
   },
   watch: {
     tab(val) {
       if (this.tab === 0) {
         this.showAllEvents();
       } else {
-        this.showEventsByType();
+        this.showEventsByType(val);
       }
     },
   },
   methods: {
     showAllEvents() {
-      console.log('all');
+      this.events = this.$page.events.edges;
     },
-    showEventsByType() {
-      console.log('type');
+    showEventsByType(val) {
+      this.events = this.$page.events.edges.filter((edge) => {
+        return edge.node.category === val;
+      });
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout v-slot="{ searchText }">
     <v-container>
       <v-row>
         <v-col sm="6" offset-sm="3">
@@ -14,10 +14,10 @@
 
     <v-row class="justify-space-around">
       <v-card
-        v-for="edge in events"
+        v-for="edge in getEvents(searchText)"
         :key="edge.node.id"
         class="mt-5"
-        width="400"
+        width="300"
       >
         <v-img
           class="white--text align-end"
@@ -26,15 +26,17 @@
         />
         <v-card-title>{{ edge.node.title }}</v-card-title>
 
-        <v-card-subtitle class="pb-0">{{ edge.node.date }}</v-card-subtitle>
+        <v-card-subtitle class="pb-0">{{
+          formatDate(edge.node.date)
+        }}</v-card-subtitle>
 
         <v-card-actions>
-          <v-btn color="orange" text>
+          <v-btn
+            @click="$router.push(`/events/${edge.node.id}`)"
+            color="orange"
+            text
+          >
             More Info
-          </v-btn>
-
-          <v-btn color="orange" text>
-            Explore
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -62,6 +64,8 @@
 </page-query>
 
 <script>
+import moment from 'moment';
+
 export default {
   metaInfo: {},
   data() {
@@ -70,9 +74,11 @@ export default {
       events: [],
     };
   },
+
   mounted() {
     this.events = this.$page.events.edges;
   },
+
   watch: {
     tab(val) {
       if (this.tab === 0) {
@@ -82,6 +88,7 @@ export default {
       }
     },
   },
+
   methods: {
     showAllEvents() {
       this.events = this.$page.events.edges;
@@ -89,6 +96,14 @@ export default {
     showEventsByType(val) {
       this.events = this.$page.events.edges.filter((edge) => {
         return edge.node.category === val;
+      });
+    },
+    formatDate(date) {
+      return moment(date).format('MMMM Do YYYY, h:mm a');
+    },
+    getEvents(searchText) {
+      return this.events.filter((edge) => {
+        return edge.node.title.toLowerCase().includes(searchText.toLowerCase());
       });
     },
   },
